@@ -1,0 +1,117 @@
+# =============================================================================
+# CKD Progression Prediction — Phase 1 Central Configuration
+# Research Prototype | Synthetic Data | Not for Clinical Use
+# =============================================================================
+
+# ── Global ───────────────────────────────────────────────────────────────────
+project_name: "CKD-TFT-Phase1"
+random_seed: 42
+phase: 1
+
+# ── Dataset Paths (relative to project root) ─────────────────────────────────
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  sequences_dir: "data/processed/sequences"
+
+  train_file: "data/raw/synthetic_ckd_longitudinal_50000_patients_400000_visits.csv"
+  val_file:   "data/raw/synthetic_ckd_validation_10000_patients_80000_visits.csv"
+  test_file:  "data/raw/synthetic_ckd_test_10000_patients_80000_visits.csv"
+  static_file: "data/raw/synthetic_ckd_baseline_static_50000_patients.csv"
+
+  # Feature group definitions (loaded alongside this config)
+  feature_groups_file: "configs/feature_groups.yaml"
+
+# ── Sequence Parameters ───────────────────────────────────────────────────────
+sequence:
+  max_seq_len: null          # null = infer from data (do NOT hardcode 8)
+  pad_value: 0.0
+  mask_value: -1             # used in padding mask arrays
+
+# ── Preprocessing ─────────────────────────────────────────────────────────────
+preprocessing:
+  numerical_imputation_strategy: "median"   # fit on train only
+  scaling: "standard"                        # StandardScaler
+  unknown_category_token: "__unknown__"
+  chronological_sort_key: "visit_date"
+
+# ── Target Columns (NEVER used as input features) ────────────────────────────
+targets:
+  classification_stage: ["stage_3m", "stage_6m", "stage_12m"]
+  regression_egfr:       ["egfr_3m",  "egfr_6m",  "egfr_12m"]
+  binary_progression:    ["progression_3m", "progression_6m", "progression_12m"]
+  other:                 ["stage_transition", "progression_event"]
+
+# All target columns (union of above — used for leakage guard)
+all_targets:
+  - stage_3m
+  - stage_6m
+  - stage_12m
+  - egfr_3m
+  - egfr_6m
+  - egfr_12m
+  - progression_3m
+  - progression_6m
+  - progression_12m
+  - stage_transition
+  - progression_event
+
+# ── CKD Stage Encoding ────────────────────────────────────────────────────────
+ckd_stage_map:
+  G1:  1
+  G2:  2
+  G3a: 3
+  G3b: 4
+  G4:  5
+  G5:  6
+
+# ── Baseline Model Hyperparameters ────────────────────────────────────────────
+baselines:
+  logistic_regression:
+    max_iter: 50
+    solver: "lbfgs"
+    multi_class: "multinomial"
+    C: 1.0
+
+  random_forest:
+    n_estimators: 10
+    max_depth: null
+    min_samples_split: 2
+    n_jobs: -1
+
+  ridge_regression:
+    alpha: 1.0
+
+  xgboost:
+    n_estimators: 10
+    max_depth: 6
+    learning_rate: 0.1
+    n_jobs: -1
+
+  lightgbm:
+    n_estimators: 10
+    max_depth: -1
+    learning_rate: 0.1
+    n_jobs: -1
+
+# ── Output Paths ──────────────────────────────────────────────────────────────
+output:
+  models_dir:         "models"
+  baselines_dir:      "models/baselines"
+  preprocessing_dir:  "models/preprocessing"
+  reports_dir:        "reports"
+  figures_dir:        "reports/figures"
+  metrics_dir:        "reports/metrics"
+
+# ── Phase 2/3/4 Placeholders (DO NOT IMPLEMENT) ───────────────────────────────
+# tft_model:          # <PHASE 2 — Temporal Fusion Transformer config goes here>
+#   d_model: 64
+#   num_heads: 4
+#   dropout: 0.1
+#   batch_size: 256
+#   epochs: 50
+#   learning_rate: 1e-3
+
+# explainability:     # <PHASE 3 — SHAP / attention visualization config goes here>
+# api:                # <PHASE 3 — model serving config goes here>
+# dashboard:          # <PHASE 4 — frontend config goes here>

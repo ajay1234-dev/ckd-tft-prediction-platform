@@ -1,0 +1,15 @@
+{
+  "precision": 0.0,
+  "recall": 0.0,
+  "f1": 0.0,
+  "sensitivity": 0.0,
+  "specificity": 1.0,
+  "n_samples": 60000,
+  "n_positive": 4697,
+  "roc_auc": 0.9269,
+  "pr_auc": 0.4525,
+  "model_name": "LightGBM_binary_progression_progression_6m",
+  "task_type": "binary_progression",
+  "target": "progression_6m",
+  "horizon": "6m"
+}

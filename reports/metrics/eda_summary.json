@@ -1,0 +1,145 @@
+{
+  "age": {
+    "mean": 58.83,
+    "median": 58.8,
+    "std": 12.95,
+    "min": 18.0,
+    "max": 91.8
+  },
+  "sex": {
+    "Male": 210968,
+    "Female": 189032
+  },
+  "bmi": {
+    "mean": 27.85,
+    "std": 4.15
+  },
+  "ckd_stage": {
+    "G1": {
+      "count": 21193,
+      "pct": 5.3
+    },
+    "G2": {
+      "count": 98253,
+      "pct": 24.56
+    },
+    "G3a": {
+      "count": 93419,
+      "pct": 23.35
+    },
+    "G3b": {
+      "count": 92073,
+      "pct": 23.02
+    },
+    "G4": {
+      "count": 61446,
+      "pct": 15.36
+    },
+    "G5": {
+      "count": 33616,
+      "pct": 8.4
+    }
+  },
+  "egfr_by_stage": {
+    "G1": {
+      "median_egfr": 98.9
+    },
+    "G2": {
+      "median_egfr": 71.7
+    },
+    "G3a": {
+      "median_egfr": 52.0
+    },
+    "G3b": {
+      "median_egfr": 38.0
+    },
+    "G4": {
+      "median_egfr": 22.9
+    },
+    "G5": {
+      "median_egfr": 8.4
+    }
+  },
+  "serum_creatinine": {
+    "mean": 1.747,
+    "median": 1.77,
+    "std": 0.453,
+    "p95": 2.46
+  },
+  "uacr": {
+    "median_mg_g": 65.6,
+    "p95_mg_g": 303.9,
+    "pct_above_300": 5.15
+  },
+  "blood_pressure": {
+    "systolic_mean": 125.3,
+    "diastolic_mean": 75.7
+  },
+  "hba1c": {
+    "mean": 5.791,
+    "median": 5.62,
+    "std": 1.036,
+    "p95": 7.72
+  },
+  "hemoglobin": {
+    "mean": 13.26,
+    "median": 13.3,
+    "std": 1.176,
+    "p95": 15.1
+  },
+  "missingness": {
+    "total_missing_columns": 16,
+    "max_missing_col": "dialysis_type",
+    "max_missing_pct": 94.75
+  },
+  "visits_per_patient": {
+    "min": 8,
+    "max": 8,
+    "median": 8.0,
+    "mean": 8.0
+  },
+  "egfr_trajectory": {
+    "cohort_egfr_visit1_mean": 49.6,
+    "cohort_egfr_last_mean": 46.89
+  },
+  "stage_transition": {
+    "dominant_transition": "see figure"
+  },
+  "comorbidity_by_stage": {
+    "stages": [
+      "G1",
+      "G2",
+      "G3a",
+      "G3b",
+      "G4",
+      "G5"
+    ],
+    "diabetes_pct": [
+      25.0,
+      26.4,
+      26.0,
+      26.5,
+      27.1,
+      27.9
+    ],
+    "hypertension_pct": [
+      44.8,
+      44.8,
+      44.6,
+      45.8,
+      45.5,
+      45.7
+    ]
+  },
+  "albuminuria_by_stage": {
+    "albuminuria_categories": [
+      "A1",
+      "A2",
+      "A3"
+    ]
+  },
+  "correlation": {
+    "n_features": 16,
+    "strongest_negative": "see figure"
+  }
+}

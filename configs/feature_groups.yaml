@@ -1,0 +1,154 @@
+# =============================================================================
+# CKD Feature Group Definitions — Single Source of Truth
+# Used by: preprocessing, sequence builder, baseline models, leakage guards
+# Research Prototype | Synthetic Data | Not for Clinical Use
+# =============================================================================
+
+identifiers:
+  - patient_id
+  - visit_id
+
+temporal_features:
+  - visit_date
+  - visit_number
+  - days_from_baseline
+  - time_since_previous_visit_days
+
+static_features:
+  - age
+  - sex
+  - height_cm
+  - family_history_ckd
+  - smoking_status
+  # Derived at first visit (or from static baseline file):
+  - baseline_bmi
+  - baseline_diabetes
+  - baseline_hypertension
+  - baseline_cardiovascular_disease
+  - baseline_heart_failure
+  - baseline_glomerulonephritis
+  - baseline_obesity
+
+time_varying_features:
+  - weight_kg
+  - bmi
+  - systolic_bp
+  - diastolic_bp
+  - serum_creatinine_mg_dl
+  - egfr_ml_min_1_73m2
+  - bun_mg_dl
+  - uacr_mg_g
+  - albuminuria_category
+  - fasting_glucose_mg_dl
+  - hba1c_pct
+  - hemoglobin_g_dl
+  - anemia
+  - sodium_meq_l
+  - potassium_meq_l
+  - calcium_mg_dl
+  - phosphate_mg_dl
+  - bicarbonate_meq_l
+  - uric_acid_mg_dl
+  - acei_arb
+  - sglt2_inhibitor
+  - diuretic
+  - antihypertensive
+  - statin
+  - epo
+  - iron_supplement
+  - metformin
+  - insulin
+  - on_dialysis
+  - dialysis_type
+  - kidney_transplant
+  - ckd_stage
+
+# Raw columns present in longitudinal files (before static feature derivation)
+raw_longitudinal_columns:
+  - diabetes
+  - hypertension
+  - cardiovascular_disease
+  - heart_failure
+  - glomerulonephritis
+  - obesity
+
+# Categorical columns and their encoding type
+categorical_encoding:
+  onehot:
+    - sex
+    - smoking_status
+    - albuminuria_category
+    - dialysis_type
+  ordinal:
+    - ckd_stage       # encoded via CKD stage codec (G1=1 … G5=6)
+    - stage_3m        # target — ordinal when used as target
+    - stage_6m
+    - stage_12m
+
+# Binary flag columns (must be 0/1 integers)
+binary_columns:
+  - family_history_ckd
+  - diabetes
+  - hypertension
+  - cardiovascular_disease
+  - heart_failure
+  - glomerulonephritis
+  - obesity
+  - anemia
+  - acei_arb
+  - sglt2_inhibitor
+  - diuretic
+  - antihypertensive
+  - statin
+  - epo
+  - iron_supplement
+  - metformin
+  - insulin
+  - on_dialysis
+  - kidney_transplant
+  - baseline_diabetes
+  - baseline_hypertension
+  - baseline_cardiovascular_disease
+  - baseline_heart_failure
+  - baseline_glomerulonephritis
+  - baseline_obesity
+
+# Numerical continuous columns (imputed + scaled)
+numerical_columns:
+  - age
+  - height_cm
+  - weight_kg
+  - bmi
+  - baseline_bmi
+  - systolic_bp
+  - diastolic_bp
+  - serum_creatinine_mg_dl
+  - egfr_ml_min_1_73m2
+  - bun_mg_dl
+  - uacr_mg_g
+  - fasting_glucose_mg_dl
+  - hba1c_pct
+  - hemoglobin_g_dl
+  - sodium_meq_l
+  - potassium_meq_l
+  - calcium_mg_dl
+  - phosphate_mg_dl
+  - bicarbonate_meq_l
+  - uric_acid_mg_dl
+
+targets:
+  classification_stage:
+    - stage_3m
+    - stage_6m
+    - stage_12m
+  regression_egfr:
+    - egfr_3m
+    - egfr_6m
+    - egfr_12m
+  binary_progression:
+    - progression_3m
+    - progression_6m
+    - progression_12m
+  other:
+    - stage_transition
+    - progression_event

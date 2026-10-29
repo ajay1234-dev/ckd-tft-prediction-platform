@@ -1,0 +1,62 @@
+{
+  "accuracy": 0.0547,
+  "macro_precision": 0.0428,
+  "macro_recall": 0.047,
+  "macro_f1": 0.0396,
+  "weighted_f1": 0.0551,
+  "confusion_matrix": [
+    [
+      387,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      15912,
+      1047,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      842,
+      14296,
+      1288,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      1231,
+      14157,
+      737,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1119,
+      9591,
+      373,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      693,
+      5010,
+      0
+    ]
+  ],
+  "n_samples": 70000,
+  "model_name": "XGBoost_classification_stage_stage_3m",
+  "task_type": "classification_stage",
+  "target": "stage_3m",
+  "horizon": "3m"
+}

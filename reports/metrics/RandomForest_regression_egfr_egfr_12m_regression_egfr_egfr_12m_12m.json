@@ -1,0 +1,10 @@
+{
+  "mae": 2.4319,
+  "rmse": 3.0598,
+  "r2": 0.9838,
+  "n_samples": 40000,
+  "model_name": "RandomForest_regression_egfr_egfr_12m",
+  "task_type": "regression_egfr",
+  "target": "egfr_12m",
+  "horizon": "12m"
+}

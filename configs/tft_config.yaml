@@ -1,0 +1,41 @@
+# =============================================================================
+# CKD Progression Prediction — Phase 2 TFT Configuration
+# Research Prototype | Synthetic Data | Not for Clinical Use
+# =============================================================================
+
+data:
+  sequence_dir: "data/processed/sequences"
+  sequence_length: 8  # read from spec.json at runtime
+
+model:
+  n_static_features: 4      # Extracted from data spec
+  n_tv_features: 29         # From SEQUENCE_SPEC.md (29 historical features)
+  n_temporal_features: 2    # Time since start, time to next
+  hidden_size: 16           # fast test
+  num_attention_heads: 1    # fast test
+  dropout: 0.1
+  n_classes: 6              # G1–G5 → codes 1–6, model uses 0–5
+
+training:
+  batch_size: 256
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  num_epochs: 1
+  early_stopping_patience: 1
+  optimizer: "adamw"
+  lr_scheduler: "reduce_on_plateau"
+  num_workers: 0            # 0 for Windows compatibility
+  pin_memory: false         # false on CPU
+  device: "auto"
+  gradient_clip_val: 1.0
+
+loss:
+  stage_weight: 1.0
+  egfr_weight: 0.01         # eGFR is on a different scale (30-90) compared to logits (~0-2)
+  progression_weight: 1.0
+  stage_loss: "cross_entropy"
+  egfr_loss: "smooth_l1"
+  progression_loss: "bce_with_logits"
+
+reproducibility:
+  random_seed: 42

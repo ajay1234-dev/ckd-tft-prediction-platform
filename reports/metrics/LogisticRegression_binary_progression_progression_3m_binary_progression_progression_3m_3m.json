@@ -1,0 +1,15 @@
+{
+  "precision": 0.0,
+  "recall": 0.0,
+  "f1": 0.0,
+  "sensitivity": 0.0,
+  "specificity": 1.0,
+  "n_samples": 70000,
+  "n_positive": 4648,
+  "roc_auc": 0.734,
+  "pr_auc": 0.1759,
+  "model_name": "LogisticRegression_binary_progression_progression_3m",
+  "task_type": "binary_progression",
+  "target": "progression_3m",
+  "horizon": "3m"
+}

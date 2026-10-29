@@ -1,0 +1,62 @@
+{
+  "accuracy": 0.0567,
+  "macro_precision": 0.0457,
+  "macro_recall": 0.0477,
+  "macro_f1": 0.0417,
+  "weighted_f1": 0.0581,
+  "confusion_matrix": [
+    [
+      191,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      8893,
+      559,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      469,
+      8088,
+      734,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      773,
+      8061,
+      510,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      629,
+      5447,
+      275,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      435,
+      3047,
+      0
+    ]
+  ],
+  "n_samples": 40000,
+  "model_name": "LightGBM_classification_stage_stage_12m",
+  "task_type": "classification_stage",
+  "target": "stage_12m",
+  "horizon": "12m"
+}

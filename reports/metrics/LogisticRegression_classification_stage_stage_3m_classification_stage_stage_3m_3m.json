@@ -1,0 +1,62 @@
+{
+  "accuracy": 0.5712,
+  "macro_precision": 0.5265,
+  "macro_recall": 0.4511,
+  "macro_f1": 0.425,
+  "weighted_f1": 0.5368,
+  "confusion_matrix": [
+    [
+      0,
+      3513,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      15466,
+      1091,
+      459,
+      134,
+      0
+    ],
+    [
+      0,
+      2171,
+      9364,
+      3738,
+      1153,
+      0
+    ],
+    [
+      0,
+      17,
+      4106,
+      6441,
+      5561,
+      0
+    ],
+    [
+      0,
+      0,
+      68,
+      2825,
+      8133,
+      57
+    ],
+    [
+      0,
+      0,
+      0,
+      346,
+      4780,
+      577
+    ]
+  ],
+  "n_samples": 70000,
+  "model_name": "LogisticRegression_classification_stage_stage_3m",
+  "task_type": "classification_stage",
+  "target": "stage_3m",
+  "horizon": "3m"
+}

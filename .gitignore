@@ -1,0 +1,61 @@
+# Python & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+venv/
+.venv/
+ENV/
+env/
+
+# Large Datasets & Processed Files (Do not commit to GitHub)
+data/raw/
+data/processed/
+dataset/
+*.csv
+*.npy
+*.npz
+*.parquet
+
+# Heavy Baseline Model Weights (keep best_model.pt or lightweight configs only)
+models/baselines/
+*.joblib
+
+# Archives
+*.zip
+*.tar.gz
+*.7z
+
+# Frontend Dependencies and Production Build
+frontend/node_modules/
+frontend/dist/
+node_modules/
+
+# Logs & Cache
+*.log
+.cache/
+.pytest_cache/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

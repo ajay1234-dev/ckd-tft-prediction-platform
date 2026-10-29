@@ -1,0 +1,62 @@
+{
+  "accuracy": 0.8726,
+  "macro_precision": 0.8801,
+  "macro_recall": 0.8748,
+  "macro_f1": 0.8771,
+  "weighted_f1": 0.8726,
+  "confusion_matrix": [
+    [
+      1787,
+      152,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      206,
+      8886,
+      501,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      649,
+      8025,
+      617,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      998,
+      7922,
+      424,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      792,
+      5321,
+      238
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      518,
+      2964
+    ]
+  ],
+  "n_samples": 40000,
+  "model_name": "RandomForest_classification_stage_stage_12m",
+  "task_type": "classification_stage",
+  "target": "stage_12m",
+  "horizon": "12m"
+}

@@ -1,0 +1,36 @@
+
+# CKD TFT Phase 1 — Requirements
+# Research Prototype | Synthetic Data | Not for Clinical Use
+
+# Core data & ML
+pandas>=2.0.0,<3.0.0
+numpy>=1.24.0,<2.0.0
+scikit-learn>=1.3.0,<2.0.0
+torch>=2.0.0
+
+# Gradient boosting (optional but recommended)
+xgboost>=2.0.0
+lightgbm>=4.0.0
+
+# Config & serialization
+pyyaml>=6.0
+pydantic>=2.0.0,<3.0.0
+joblib>=1.3.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.13.0
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Phase 3 — API & explainability backend
+fastapi>=0.100.0,<1.0.0
+uvicorn[standard]>=0.23.0
+httpx>=0.24.0       # for FastAPI TestClient / async tests
+anyio>=3.7.0        # async test support
+
+# Notebook support (optional)
+jupyter>=1.0.0
+ipykernel>=6.25.0

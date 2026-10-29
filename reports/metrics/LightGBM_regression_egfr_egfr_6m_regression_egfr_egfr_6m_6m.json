@@ -1,0 +1,10 @@
+{
+  "mae": 7.0884,
+  "rmse": 8.7862,
+  "r2": 0.866,
+  "n_samples": 60000,
+  "model_name": "LightGBM_regression_egfr_egfr_6m",
+  "task_type": "regression_egfr",
+  "target": "egfr_6m",
+  "horizon": "6m"
+}

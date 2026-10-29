@@ -1,0 +1,10 @@
+{
+  "mae": 7.1057,
+  "rmse": 8.8108,
+  "r2": 0.8656,
+  "n_samples": 40000,
+  "model_name": "XGBoost_regression_egfr_egfr_12m",
+  "task_type": "regression_egfr",
+  "target": "egfr_12m",
+  "horizon": "12m"
+}

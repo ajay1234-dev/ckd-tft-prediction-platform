@@ -1,0 +1,39 @@
+{
+  "data": {
+    "sequence_dir": "data/processed/sequences",
+    "sequence_length": 8
+  },
+  "model": {
+    "n_static_features": 4,
+    "n_tv_features": 29,
+    "n_temporal_features": 2,
+    "hidden_size": 16,
+    "num_attention_heads": 1,
+    "dropout": 0.1,
+    "n_classes": 6
+  },
+  "training": {
+    "batch_size": 256,
+    "learning_rate": 0.001,
+    "weight_decay": 1e-05,
+    "num_epochs": 1,
+    "early_stopping_patience": 1,
+    "optimizer": "adamw",
+    "lr_scheduler": "reduce_on_plateau",
+    "num_workers": 0,
+    "pin_memory": false,
+    "device": "auto",
+    "gradient_clip_val": 1.0
+  },
+  "loss": {
+    "stage_weight": 1.0,
+    "egfr_weight": 0.01,
+    "progression_weight": 1.0,
+    "stage_loss": "cross_entropy",
+    "egfr_loss": "smooth_l1",
+    "progression_loss": "bce_with_logits"
+  },
+  "reproducibility": {
+    "random_seed": 42
+  }
+}

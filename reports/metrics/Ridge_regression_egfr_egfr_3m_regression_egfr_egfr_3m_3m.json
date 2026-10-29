@@ -1,0 +1,10 @@
+{
+  "mae": 2.2326,
+  "rmse": 2.813,
+  "r2": 0.9862,
+  "n_samples": 70000,
+  "model_name": "Ridge_regression_egfr_egfr_3m",
+  "task_type": "regression_egfr",
+  "target": "egfr_3m",
+  "horizon": "3m"
+}

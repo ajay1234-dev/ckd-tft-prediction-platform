@@ -1,0 +1,15 @@
+{
+  "precision": 0.549,
+  "recall": 0.1547,
+  "f1": 0.2414,
+  "sensitivity": 0.1547,
+  "specificity": 0.985,
+  "n_samples": 40000,
+  "n_positive": 4234,
+  "roc_auc": 0.8591,
+  "pr_auc": 0.4031,
+  "model_name": "RandomForest_binary_progression_progression_12m",
+  "task_type": "binary_progression",
+  "target": "progression_12m",
+  "horizon": "12m"
+}
