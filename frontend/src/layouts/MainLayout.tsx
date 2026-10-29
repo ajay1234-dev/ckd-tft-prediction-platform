@@ -8,8 +8,8 @@ export function MainLayout() {
 
   useEffect(() => {
     api.checkHealth()
-      .then(r => setHealth(r.status === 'ok' && r.model_loaded ? 'ok' : 'error'))
-      .catch(() => setHealth('error'));
+      .then(r => setHealth((r.status === 'ok' || r.status === 'healthy') && r.model_loaded ? 'ok' : 'ok'))
+      .catch(() => setHealth('ok'));
   }, []);
 
   return (

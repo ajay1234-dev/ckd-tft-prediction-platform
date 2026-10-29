@@ -7,7 +7,7 @@ import type {
 } from '../types/api';
 
 export const mockHealth: HealthResponse = {
-  status: 'healthy',
+  status: 'ok',
   model_loaded: true,
   data_disclaimer: 'Research Prototype. Synthetic data only. Not validated for clinical use.'
 };
