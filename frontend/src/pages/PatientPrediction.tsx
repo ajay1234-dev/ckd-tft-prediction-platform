@@ -1019,17 +1019,47 @@ export default function PatientPrediction() {
                     x: ['3 Months', '6 Months', '12 Months'],
                     y: egfrValues,
                     type: 'scatter', mode: 'lines+markers',
-                    name: 'eGFR',
+                    name: 'eGFR Forecast',
                     fill: 'tozeroy',
-                    fillcolor: 'rgba(79, 70, 229, 0.06)',
-                    line: { color: '#4f46e5', width: 2.5, shape: 'spline' },
-                    marker: { size: 9, color: '#4f46e5', line: { color: '#ffffff', width: 2 } },
+                    fillcolor: 'rgba(79, 70, 229, 0.08)',
+                    line: { color: '#4f46e5', width: 3, shape: 'spline' },
+                    marker: { size: 10, color: '#4f46e5', line: { color: '#ffffff', width: 2.5 } },
+                    hovertemplate: '<b>%{x}</b><br>Forecast eGFR: <b>%{y:.1f}</b> mL/min/1.73m²<extra></extra>',
                   }]}
                   layout={{
                     ...plotLayout,
                     height: 220,
-                    margin: { t: 8, b: 36, l: 44, r: 8 },
-                    yaxis: { ...plotLayout.yaxis, title: { text: 'eGFR (std)', font: { size: 10, color: '#64748b' } } },
+                    margin: { t: 14, b: 36, l: 48, r: 14 },
+                    yaxis: { 
+                      ...plotLayout.yaxis, 
+                      title: { text: 'eGFR (mL/min/1.73m²)', font: { size: 10.5, color: '#64748b' } },
+                      zeroline: false
+                    },
+                    shapes: [
+                      {
+                        type: 'line',
+                        xref: 'paper',
+                        x0: 0,
+                        x1: 1,
+                        yref: 'y',
+                        y0: 15,
+                        y1: 15,
+                        line: { color: '#ef4444', width: 1.5, dash: 'dash' }
+                      }
+                    ],
+                    annotations: [
+                      {
+                        xref: 'paper',
+                        x: 0.98,
+                        yref: 'y',
+                        y: 15,
+                        text: 'Kidney Failure (G5: <15)',
+                        showarrow: false,
+                        xanchor: 'right',
+                        yanchor: 'bottom',
+                        font: { size: 9, color: '#dc2626', family: 'Inter, sans-serif' }
+                      }
+                    ]
                   }}
                   useResizeHandler style={{ width: '100%', height: '100%' }}
                   config={{ displayModeBar: false }}
@@ -1066,14 +1096,16 @@ export default function PatientPrediction() {
                     color: i === 0 ? '#4f46e5' : i === 1 ? '#0284c7' : '#059669',
                     line: { color: 'transparent' }
                   },
+                  hovertemplate: '<b>%{fullData.name} - Stage %{x}</b><br>Stage Confidence: <b>%{y:.1f}%</b><extra></extra>',
                 }))}
                 layout={{
                   ...plotLayout,
                   barmode: 'group',
                   height: 230,
-                  margin: { t: 8, b: 36, l: 44, r: 8 },
-                  legend: { orientation: 'h', x: 0, y: -0.3, font: { color: '#64748b', size: 11 } },
-                  yaxis: { ...plotLayout.yaxis, title: { text: 'Probability (%)', font: { size: 10, color: '#64748b' } } },
+                  margin: { t: 8, b: 36, l: 48, r: 12 },
+                  legend: { orientation: 'h', x: 0, y: -0.3, font: { color: '#475569', size: 11 } },
+                  xaxis: { ...plotLayout.xaxis, title: { text: 'KDIGO CKD Stage', font: { size: 10.5, color: '#64748b' } } },
+                  yaxis: { ...plotLayout.yaxis, title: { text: 'Stage Probability (%)', font: { size: 10.5, color: '#64748b' } } },
                 }}
                 useResizeHandler style={{ width: '100%', height: '100%' }}
                 config={{ displayModeBar: false }}

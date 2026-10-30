@@ -197,21 +197,46 @@ export default function Explainability() {
                   marker: {
                     color: validAttention.map(a => {
                       const v = a.attention_weight;
-                      return v > 0.2 ? '#059669' : v > 0.1 ? '#d97706' : '#4f46e5';
+                      return v > 0.2 ? '#059669' : v > 0.1 ? '#0284c7' : '#4f46e5';
                     }),
                     line: { color: 'transparent' },
                   },
-                  hovertemplate: '<b>%{x}</b><br>Attention Focus: %{y:.2f}%<extra></extra>',
+                  hovertemplate: '<b>%{x}</b><br>Temporal Attention Focus: <b>%{y:.2f}%</b><extra></extra>',
                 }]}
                 layout={{
                   ...plotLayout,
                   height: 220,
-                  margin: { t: 8, b: 48, l: 48, r: 8 },
-                  xaxis: { ...plotLayout.xaxis, tickangle: -20, tickfont: { size: 10, color: '#475569' } },
+                  margin: { t: 12, b: 48, l: 52, r: 12 },
+                  xaxis: { ...plotLayout.xaxis, tickangle: -15, tickfont: { size: 10, color: '#475569' } },
                   yaxis: {
                     ...plotLayout.yaxis,
-                    title: { text: 'Attention (%)', font: { size: 10, color: '#64748b' } },
+                    title: { text: 'Attention Weight (%)', font: { size: 10.5, color: '#64748b' } },
                   },
+                  shapes: validAttention.length > 0 ? [
+                    {
+                      type: 'line',
+                      xref: 'paper',
+                      x0: 0,
+                      x1: 1,
+                      yref: 'y',
+                      y0: +(100 / validAttention.length).toFixed(1),
+                      y1: +(100 / validAttention.length).toFixed(1),
+                      line: { color: '#94a3b8', width: 1.5, dash: 'dot' }
+                    }
+                  ] : [],
+                  annotations: validAttention.length > 0 ? [
+                    {
+                      xref: 'paper',
+                      x: 0.98,
+                      yref: 'y',
+                      y: +(100 / validAttention.length).toFixed(1),
+                      text: `Uniform Baseline (${(100 / validAttention.length).toFixed(1)}%)`,
+                      showarrow: false,
+                      xanchor: 'right',
+                      yanchor: 'bottom',
+                      font: { size: 9, color: '#64748b', family: 'Inter, sans-serif' }
+                    }
+                  ] : []
                 }}
                 useResizeHandler style={{ width: '100%', height: '100%' }}
                 config={{ displayModeBar: false }}
