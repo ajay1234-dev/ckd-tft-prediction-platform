@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Plot from 'react-plotly.js';
-import { Search, Loader2, BrainCircuit, BarChart2, Clock } from 'lucide-react';
+import { Search, Loader2, BrainCircuit, BarChart2, Clock, Lightbulb, Activity, TrendingUp } from 'lucide-react';
 import api from '../api/client';
 import type { ExplanationResponse } from '../types/api';
 
@@ -66,22 +66,70 @@ export default function Explainability() {
   const validAttention = explanation?.temporal_attention.filter(a => !a.is_padding) || [];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      {/* Header */}
-      <div>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em', marginBottom: '0.25rem' }}>
-          Clinical Interpretability & Progression Drivers
-        </h1>
-        <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
-          Key clinical biomarker importance and historical visit attention analysis.
-        </p>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+      {/* ── Page Hero ───────────────────────────────────── */}
+      <div style={{
+        background: 'linear-gradient(135deg, rgba(79,70,229,0.06) 0%, rgba(2,132,199,0.04) 100%)',
+        border: '1px solid rgba(165,180,252,0.3)',
+        borderRadius: 20,
+        padding: '1.75rem 2rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '1.5rem',
+        flexWrap: 'wrap',
+        animation: 'fadeInUp 0.4s ease both',
+      }}>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.5rem' }}>
+            <div style={{
+              background: 'linear-gradient(135deg, #4f46e5, #0284c7)',
+              borderRadius: 10,
+              padding: '0.4rem',
+              display: 'flex',
+            }}>
+              <BrainCircuit size={18} color="#ffffff" />
+            </div>
+            <span className="badge badge-indigo">XAI Module</span>
+          </div>
+          <h1 className="page-title" style={{ marginBottom: '0.4rem' }}>
+            Clinical Interpretability
+          </h1>
+          <p style={{ color: '#64748b', fontSize: '0.88rem', margin: 0, maxWidth: 500 }}>
+            Explore which biomarkers and historical visits drive the TFT model's progression predictions — full SHAP-equivalent feature attribution.
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+          {[
+            { icon: <BarChart2 size={16} color="#4f46e5" />, label: 'Static Drivers', desc: 'Baseline demographics', bg: '#eef2ff', border: '#c7d2fe' },
+            { icon: <Activity size={16} color="#0284c7" />, label: 'Lab Trends', desc: 'Time-varying markers', bg: '#f0f9ff', border: '#bae6fd' },
+            { icon: <Clock size={16} color="#059669" />, label: 'Visit Attention', desc: 'Temporal focus weights', bg: '#ecfdf5', border: '#a7f3d0' },
+          ].map(item => (
+            <div key={item.label} style={{
+              background: item.bg,
+              border: `1px solid ${item.border}`,
+              borderRadius: 14,
+              padding: '0.75rem 1rem',
+              minWidth: 130,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.3rem' }}>
+                {item.icon}
+                <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#0f172a' }}>{item.label}</span>
+              </div>
+              <div style={{ fontSize: '0.7rem', color: '#64748b' }}>{item.desc}</div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Search Bar */}
+      {/* ── Search Bar ──────────────────────────────────── */}
       <div className="white-card">
-        <div className="section-title">Patient Lookup</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+          <Lightbulb size={16} color="#d97706" />
+          <div className="section-title" style={{ marginBottom: 0 }}>Patient Lookup — Enter ID to Analyse Drivers</div>
+        </div>
         <form onSubmit={handleExplain} style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-          <div style={{ position: 'relative', flex: 1, maxWidth: '420px' }}>
+          <div style={{ position: 'relative', flex: 1, maxWidth: '460px' }}>
             <Search size={16} color="#94a3b8" style={{ position: 'absolute', left: '0.875rem', top: '50%', transform: 'translateY(-50%)' }} />
             <input
               className="input-field"
@@ -97,55 +145,116 @@ export default function Explainability() {
             Analyse Drivers
           </button>
         </form>
-        {error && <div style={{ marginTop: '0.75rem', fontSize: '0.85rem', color: '#dc2626' }}>{error}</div>}
+        {error && (
+          <div style={{
+            marginTop: '0.75rem',
+            padding: '0.6rem 0.875rem',
+            background: '#fef2f2',
+            border: '1px solid #fecaca',
+            borderRadius: 10,
+            fontSize: '0.85rem',
+            color: '#dc2626',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+          }}>⚠ {error}</div>
+        )}
       </div>
 
       {explanation && (
         <>
           {/* Key Insights Summary Cards */}
-          <div className="white-card">
-            <div className="section-title">Core Interpretability Insights</div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-              <div style={{ background: '#eef2ff', borderRadius: 12, padding: '1.15rem', border: '1px solid #c7d2fe' }}>
-                <div style={{ fontSize: '0.72rem', color: '#4338ca', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 700, marginBottom: '0.4rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem' }}>
+            {/* Dominant Baseline Driver */}
+            <div className="white-card" style={{ padding: '1.5rem', borderTop: '3px solid #4f46e5' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                <div style={{ background: '#eef2ff', borderRadius: 8, padding: '0.35rem', display: 'flex' }}>
+                  <BarChart2 size={15} color="#4f46e5" />
+                </div>
+                <div style={{ fontSize: '0.68rem', color: '#4338ca', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 800 }}>
                   Dominant Baseline Driver
                 </div>
-                <div style={{ fontWeight: 800, fontSize: '1.05rem', color: '#1e1b4b' }}>
-                  {staticFeats[0]?.[0]?.replace(/_/g, ' ') || '—'}
-                </div>
-                <div style={{ fontSize: '0.78rem', color: '#4f46e5', fontWeight: 600, marginTop: '0.25rem' }}>
-                  {staticFeats[0] ? (staticFeats[0][1] * 100).toFixed(1) + '% importance' : ''}
-                </div>
               </div>
+              <div style={{ fontWeight: 900, fontSize: '1.15rem', color: '#1e1b4b', marginBottom: '0.3rem', lineHeight: 1.2 }}>
+                {staticFeats[0]?.[0]?.replace(/_/g, ' ') || '—'}
+              </div>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.3rem',
+                padding: '0.2rem 0.65rem',
+                borderRadius: 9999,
+                background: '#eef2ff',
+                border: '1px solid #c7d2fe',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                color: '#4f46e5',
+              }}>
+                {staticFeats[0] ? (staticFeats[0][1] * 100).toFixed(1) + '% importance' : ''}
+              </div>
+            </div>
 
-              <div style={{ background: '#f0f9ff', borderRadius: 12, padding: '1.15rem', border: '1px solid #bae6fd' }}>
-                <div style={{ fontSize: '0.72rem', color: '#0369a1', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 700, marginBottom: '0.4rem' }}>
+            {/* Top Longitudinal Marker */}
+            <div className="white-card" style={{ padding: '1.5rem', borderTop: '3px solid #0284c7' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                <div style={{ background: '#f0f9ff', borderRadius: 8, padding: '0.35rem', display: 'flex' }}>
+                  <TrendingUp size={15} color="#0284c7" />
+                </div>
+                <div style={{ fontSize: '0.68rem', color: '#0369a1', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 800 }}>
                   Top Longitudinal Marker
                 </div>
-                <div style={{ fontWeight: 800, fontSize: '1.05rem', color: '#082f49' }}>
-                  {tvFeats[0]?.[0]?.replace(/_/g, ' ') || '—'}
-                </div>
-                <div style={{ fontSize: '0.78rem', color: '#0284c7', fontWeight: 600, marginTop: '0.25rem' }}>
-                  {tvFeats[0] ? (tvFeats[0][1] * 100).toFixed(1) + '% importance' : ''}
-                </div>
               </div>
+              <div style={{ fontWeight: 900, fontSize: '1.15rem', color: '#082f49', marginBottom: '0.3rem', lineHeight: 1.2 }}>
+                {tvFeats[0]?.[0]?.replace(/_/g, ' ') || '—'}
+              </div>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.3rem',
+                padding: '0.2rem 0.65rem',
+                borderRadius: 9999,
+                background: '#f0f9ff',
+                border: '1px solid #bae6fd',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                color: '#0284c7',
+              }}>
+                {tvFeats[0] ? (tvFeats[0][1] * 100).toFixed(1) + '% importance' : ''}
+              </div>
+            </div>
 
-              <div style={{ background: '#ecfdf5', borderRadius: 12, padding: '1.15rem', border: '1px solid #a7f3d0' }}>
-                <div style={{ fontSize: '0.72rem', color: '#047857', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 700, marginBottom: '0.4rem' }}>
+            {/* Most Attended Visit */}
+            <div className="white-card" style={{ padding: '1.5rem', borderTop: '3px solid #059669' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                <div style={{ background: '#ecfdf5', borderRadius: 8, padding: '0.35rem', display: 'flex' }}>
+                  <Clock size={15} color="#059669" />
+                </div>
+                <div style={{ fontSize: '0.68rem', color: '#047857', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 800 }}>
                   Most Attended Visit
                 </div>
-                <div style={{ fontWeight: 800, fontSize: '1.05rem', color: '#064e3b' }}>
-                  {validAttention.length
-                    ? `Visit #${validAttention.sort((a, b) => b.attention_weight - a.attention_weight)[0].visit_number}`
-                    : '—'
-                  }
-                </div>
-                <div style={{ fontSize: '0.78rem', color: '#059669', fontWeight: 600, marginTop: '0.25rem' }}>
-                  {validAttention.length
-                    ? (validAttention.sort((a, b) => b.attention_weight - a.attention_weight)[0].attention_weight * 100).toFixed(1) + '% attention focus'
-                    : ''
-                  }
-                </div>
+              </div>
+              <div style={{ fontWeight: 900, fontSize: '1.15rem', color: '#064e3b', marginBottom: '0.3rem', lineHeight: 1.2 }}>
+                {validAttention.length
+                  ? `Visit #${validAttention.sort((a, b) => b.attention_weight - a.attention_weight)[0].visit_number}`
+                  : '—'
+                }
+              </div>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.3rem',
+                padding: '0.2rem 0.65rem',
+                borderRadius: 9999,
+                background: '#ecfdf5',
+                border: '1px solid #a7f3d0',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                color: '#059669',
+              }}>
+                {validAttention.length
+                  ? (validAttention.sort((a, b) => b.attention_weight - a.attention_weight)[0].attention_weight * 100).toFixed(1) + '% attention focus'
+                  : ''
+                }
               </div>
             </div>
           </div>

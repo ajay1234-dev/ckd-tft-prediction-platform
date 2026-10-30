@@ -3,7 +3,7 @@ import Plot from 'react-plotly.js';
 import {
   Search, Loader2, ArrowRight, TrendingDown, TrendingUp,
   Minus, BrainCircuit, ChevronDown, ChevronUp, Sparkles,
-  Clock, AlertTriangle, CheckCircle2, FileText, Printer, Copy, Check, X
+  Clock, AlertTriangle, CheckCircle2, FileText, Printer, Copy, Check, X, Microscope
 } from 'lucide-react';
 import api from '../api/client';
 import { generateAIExplanation } from '../api/openrouter';
@@ -787,22 +787,71 @@ export default function PatientPrediction() {
     : null;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      {/* Header */}
-      <div>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em', marginBottom: '0.25rem' }}>
-          Patient Progression Forecasting
-        </h1>
-        <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
-          Multi-horizon prediction of CKD stage, eGFR trajectory, and risk progression.
-        </p>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+      {/* ── Page Hero ─────────────────────────────────────── */}
+      <div style={{
+        background: 'linear-gradient(135deg, rgba(79,70,229,0.06) 0%, rgba(2,132,199,0.04) 100%)',
+        border: '1px solid rgba(165,180,252,0.3)',
+        borderRadius: 20,
+        padding: '1.75rem 2rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '1.5rem',
+        flexWrap: 'wrap',
+        animation: 'fadeInUp 0.4s ease both',
+      }}>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.5rem' }}>
+            <div style={{
+              background: 'linear-gradient(135deg, #4f46e5, #0284c7)',
+              borderRadius: 10,
+              padding: '0.4rem',
+              display: 'flex',
+            }}>
+              <Microscope size={18} color="#ffffff" />
+            </div>
+            <span style={{
+              fontSize: '0.7rem', fontWeight: 800, letterSpacing: '0.1em',
+              textTransform: 'uppercase', color: '#4338ca',
+              background: '#eef2ff', border: '1px solid #c7d2fe',
+              padding: '0.2rem 0.6rem', borderRadius: 9999,
+            }}>Prediction Engine</span>
+          </div>
+          <h1 className="page-title" style={{ marginBottom: '0.4rem' }}>
+            Patient Progression Forecasting
+          </h1>
+          <p style={{ color: '#64748b', fontSize: '0.88rem', margin: 0, maxWidth: 520 }}>
+            Multi-horizon TFT predictions of CKD stage, eGFR trajectory, and kidney failure risk.
+            Enter a patient ID from the test cohort (60001–70000) to begin.
+          </p>
+        </div>
+        {/* Mini metric summary */}
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+          {[
+            { label: '3 Horizons', desc: '3m · 6m · 12m', bg: '#eef2ff', border: '#c7d2fe', color: '#4338ca' },
+            { label: 'eGFR Trend', desc: 'mL/min/1.73m²', bg: '#f0f9ff', border: '#bae6fd', color: '#0369a1' },
+            { label: 'Stage G1→G5', desc: 'KDIGO scale', bg: '#ecfdf5', border: '#a7f3d0', color: '#047857' },
+          ].map(item => (
+            <div key={item.label} style={{
+              background: item.bg, border: `1px solid ${item.border}`,
+              borderRadius: 14, padding: '0.75rem 1rem', minWidth: 120,
+            }}>
+              <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.2rem' }}>{item.label}</div>
+              <div style={{ fontSize: '0.7rem', color: '#64748b' }}>{item.desc}</div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Search Input Card */}
+      {/* ── Search Input Card ──────────────────────────── */}
       <div className="white-card">
-        <div className="section-title">Patient Lookup</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+          <Search size={16} color="#4f46e5" />
+          <div className="section-title" style={{ marginBottom: 0 }}>Patient Lookup — Enter Test Cohort ID</div>
+        </div>
         <form onSubmit={handleSearch} style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-          <div style={{ position: 'relative', flex: 1, maxWidth: '420px' }}>
+          <div style={{ position: 'relative', flex: 1, maxWidth: '460px' }}>
             <Search size={16} color="#94a3b8" style={{ position: 'absolute', left: '0.875rem', top: '50%', transform: 'translateY(-50%)' }} />
             <input
               className="input-field"
@@ -819,7 +868,12 @@ export default function PatientPrediction() {
           </button>
         </form>
         {patientError && (
-          <div style={{ marginTop: '0.75rem', fontSize: '0.85rem', color: '#dc2626' }}>{patientError}</div>
+          <div style={{
+            marginTop: '0.75rem', padding: '0.6rem 0.875rem',
+            background: '#fef2f2', border: '1px solid #fecaca',
+            borderRadius: 10, fontSize: '0.85rem', color: '#dc2626',
+            display: 'flex', alignItems: 'center', gap: '0.4rem',
+          }}>⚠ {patientError}</div>
         )}
       </div>
 
